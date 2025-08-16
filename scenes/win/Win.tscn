@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://6p0oma5cvipd"]
+
+[ext_resource type="Script" uid="uid://cappe43tfe48v" path="res://scenes/win/win.gd" id="1_80lpo"]
+[ext_resource type="Texture2D" uid="uid://cm6c1loa5ee58" path="res://assets/orb.png" id="1_ns002"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_80lpo"]
+radius = 3.0
+
+[node name="Win" type="Node2D"]
+z_index = 10
+script = ExtResource("1_80lpo")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_ns002")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_80lpo")
+
+[connection signal="body_shape_entered" from="Area2D" to="." method="_on_area_2d_body_shape_entered"]

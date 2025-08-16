@@ -6,9 +6,13 @@ extends CharacterBody2D
 @export var orbs_label: Label
 
 @export var max_orbs := 1
-var orbs_left := max_orbs
+var orbs_left: int
 
 signal orb_thrown(position: Vector2)
+
+func _ready():
+	orbs_left = max_orbs
+	orbs_label.text = "Orbs: %d / %d" % [orbs_left, max_orbs]
 
 func throw_orb(target: Vector2) -> void:
 	var tween = create_tween()

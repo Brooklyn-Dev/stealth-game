@@ -10,6 +10,7 @@ radius = 2.0
 z_index = 5
 y_sort_enabled = true
 script = ExtResource("1_jwrso")
+vision_range = 50.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_jwrso")
@@ -20,3 +21,4 @@ position = Vector2(0, -7)
 texture = ExtResource("1_tv2d7")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(43.3013, 25)
