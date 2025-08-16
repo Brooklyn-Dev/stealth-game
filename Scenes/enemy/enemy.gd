@@ -12,7 +12,7 @@ var target_facing := Vector2.RIGHT
 @export var vision_angle := 60.0
 @export var vision_rays := 32
 
-@export var hearing_range := 75.0
+@export var hearing_range := 40.0 : set = set_hearing_range
 @export var investigate_time := 3.0
 var investigating := false
 var investigate_timer: float
@@ -22,6 +22,10 @@ var player: Node2D
 func set_facing_degrees(value: float):
 	facing_degrees = value
 	facing_direction = Vector2.RIGHT.rotated(deg_to_rad(value))
+	queue_redraw()
+
+func set_hearing_range(value: float):
+	hearing_range = value
 	queue_redraw()
 
 func _ready():
@@ -73,6 +77,19 @@ func _can_see_player() -> bool:
 	return not raycast.is_colliding() or raycast.get_collider() == player
 
 func _draw():
+	_draw_hearing_zone()	
+	_draw_vision_cone()
+
+func _draw_hearing_zone() -> void:
+	var points = []
+	for i in range(33):
+		var angle = i * TAU / 32.0
+		var point = Vector2(cos(angle) * hearing_range, sin(angle) * hearing_range * 0.5)
+		points.append(point)
+	
+	draw_polyline(points, Color.YELLOW * 0.5, 2)
+
+func _draw_vision_cone() -> void:
 	var half_angle = deg_to_rad(vision_angle / 2)
 	var points = [Vector2.ZERO]
 	
@@ -87,12 +104,19 @@ func _draw():
 		if raycast.is_colliding():
 			end_point = to_local(raycast.get_collision_point())
 		
+		end_point.y *= 0.5
 		points.append(end_point)
 	
 	draw_colored_polygon(points, Color.RED * 0.5)
 
 func _on_orb_thrown(world_pos: Vector2):
-	if global_position.distance_to(world_pos) <= hearing_range:
+	var dist_to_orb = global_position.distance_to(world_pos)
+	
+	var iso_offset = world_pos - global_position
+	iso_offset.y *= 0.5
+	var iso_dist = iso_offset.length()
+	
+	if iso_dist <= hearing_range:
 		investigating = true
 		investigate_timer = investigate_time
 		target_facing = (world_pos - global_position).normalized()
