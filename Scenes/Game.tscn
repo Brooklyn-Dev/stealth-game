@@ -5,25 +5,28 @@
 [ext_resource type="PackedScene" uid="uid://jfdw5tg5oaio" path="res://scenes/player/Player.tscn" id="2_qbsmt"]
 
 [node name="Game" type="Node2D"]
+
+[node name="Y-Sort" type="Node2D" parent="."]
 y_sort_enabled = true
 
-[node name="TileMap" type="Node2D" parent="."]
+[node name="TileMap" type="Node2D" parent="Y-Sort"]
 y_sort_enabled = true
 
-[node name="Layer 1" type="TileMapLayer" parent="TileMap"]
+[node name="Layer 1" type="TileMapLayer" parent="Y-Sort/TileMap"]
 texture_filter = 1
 tile_map_data = PackedByteArray("AAD8/wMAAAABAAAAAAD8/wIAAAABAAAAAAD8/wEAAAABAAAAAAD8/wAAAAABAAAAAAD8////AAABAAAAAAD8//7/AAABAAAAAAD8//3/AAABAAAAAAD8//z/AAABAAAAAAD7//z/AAABAAAAAAD7//3/AAABAAAAAAD7////AAABAAAAAAD7//7/AAABAAAAAAD7/wAAAAABAAAAAAD7/wEAAAABAAAAAAD7/wIAAAABAAAAAAD7/wMAAAABAAAAAAD9/wMAAAABAAAAAAD+/wMAAAABAAAAAAD//wMAAAABAAAAAAAAAAMAAAABAAAAAAABAAMAAAABAAAAAAABAAIAAAABAAAAAAACAAMAAAABAAAAAAACAAIAAAABAAAAAAACAAEAAAABAAAAAAABAAEAAAABAAAAAAABAAAAAAABAAAAAAABAP//AAABAAAAAAABAP7/AAABAAAAAAAAAP7/AAABAAAAAAAAAP3/AAABAAAAAAD///3/AAABAAAAAAD+//3/AAABAAAAAAD9//3/AAABAAAAAAD9//7/AAABAAAAAAD9////AAABAAAAAAD+////AAABAAAAAAD+/wAAAAABAAAAAAD//wAAAAABAAAAAAD/////AAABAAAAAAD+/wEAAAABAAAAAAD//wEAAAABAAAAAAD//wIAAAABAAAAAAAAAAIAAAABAAAAAAD9/wAAAAABAAAAAAD9/wEAAAABAAAAAAD9/wIAAAABAAAAAAD+/wIAAAABAAAAAAAAAAAAAAABAAAAAAAAAP//AAABAAAAAAD///7/AAABAAAAAAD+//7/AAABAAAAAAD9//z/AAABAAAAAAD+//z/AAABAAAAAAD///z/AAABAAAAAAAAAPz/AAABAAAAAAABAPz/AAABAAAAAAABAP3/AAABAAAAAAACAPz/AAABAAAAAAACAP3/AAABAAAAAAACAP//AAABAAAAAAACAAAAAAABAAAAAAACAP7/AAABAAAAAAAAAAEAAAABAAAAAAA=")
 tile_set = ExtResource("1_ibkli")
 script = ExtResource("2_cpr0p")
 
-[node name="Layer 2" type="TileMapLayer" parent="TileMap"]
+[node name="Layer 2" type="TileMapLayer" parent="Y-Sort/TileMap"]
 y_sort_enabled = true
 texture_filter = 1
 tile_map_data = PackedByteArray("AAAAAPz/AAACAAAAAAD7//z/AAACAAAAAAD7/wEAAAACAAAAAAD9////AAACAAAAAAD9//7/AAACAAAAAAD+//7/AAACAAAAAAD+////AAACAAAAAAAAAAEAAAACAAAAAAA=")
 tile_set = ExtResource("1_ibkli")
 
-[node name="Player" parent="." instance=ExtResource("2_qbsmt")]
+[node name="Player" parent="Y-Sort" node_paths=PackedStringArray("tileMapLayer") instance=ExtResource("2_qbsmt")]
 position = Vector2(-32, -24)
+tileMapLayer = NodePath("../TileMap/Layer 1")
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
+[node name="Camera2D" type="Camera2D" parent="Y-Sort/Player"]
 zoom = Vector2(5, 5)

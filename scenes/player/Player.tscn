@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://jfdw5tg5oaio"]
+[gd_scene load_steps=5 format=3 uid="uid://jfdw5tg5oaio"]
 
 [ext_resource type="Texture2D" uid="uid://c67oxy0qgn17c" path="res://assets/player.png" id="1_p0vlq"]
 [ext_resource type="Script" uid="uid://bemajfntsqj6w" path="res://scenes/player/player.gd" id="1_v6fml"]
+[ext_resource type="PackedScene" uid="uid://bbff1jy458sxy" path="res://scenes/Orb.tscn" id="2_4kuee"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5q5h1"]
 radius = 2.0
@@ -11,6 +12,7 @@ z_index = 5
 y_sort_enabled = true
 motion_mode = 1
 script = ExtResource("1_v6fml")
+orbScene = ExtResource("2_4kuee")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_5q5h1")

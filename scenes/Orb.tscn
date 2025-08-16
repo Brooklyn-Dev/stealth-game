@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://bbff1jy458sxy"]
+
+[ext_resource type="Texture2D" uid="uid://cm6c1loa5ee58" path="res://assets/orb.png" id="1_x580g"]
+[ext_resource type="Script" uid="uid://bkky3cufrbh2w" path="res://scripts/trail_2d.gd" id="2_16fcm"]
+
+[sub_resource type="Curve" id="Curve_x580g"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="Orb" type="Node2D"]
+z_index = 5
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_x580g")
+
+[node name="Line2D" type="Line2D" parent="."]
+width = 1.0
+width_curve = SubResource("Curve_x580g")
+script = ExtResource("2_16fcm")
