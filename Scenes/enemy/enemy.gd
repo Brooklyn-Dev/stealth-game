@@ -18,6 +18,7 @@ var investigating := false
 var investigate_timer: float
 
 var player: Node2D
+var last_player_pos: Vector2
 
 func set_facing_degrees(value: float):
 	facing_degrees = value
@@ -34,6 +35,7 @@ func _ready():
 	player = get_node("../Player")
 	if player:
 		player.orb_thrown.connect(_on_orb_thrown)
+		last_player_pos = player.global_position
 
 func _process(delta):
 	if Engine.is_editor_hint():
@@ -54,6 +56,8 @@ func _physics_process(delta):
 	
 	if _can_see_player():
 		get_tree().reload_current_scene()
+	
+	_check_player_movement()
 	
 	queue_redraw()
 
@@ -81,6 +85,18 @@ func _is_in_hearing_range(pos: Vector2) -> bool:
 	var nx = offset.x / hearing_range
 	var ny = offset.y / (hearing_range * 0.5)
 	return nx * nx + ny * ny <= 1.0
+
+func _check_player_movement() -> void:
+	if not player:
+		return
+	
+	var current_pos = player.global_position
+	var moved_distance = last_player_pos.distance_to(current_pos)
+
+	if moved_distance > 0.1 and _is_in_hearing_range(current_pos):
+		_investigate_location(current_pos)
+	
+	last_player_pos = current_pos
 
 func _draw():
 	_draw_hearing_zone()	
@@ -119,3 +135,7 @@ func _on_orb_thrown(world_pos: Vector2):
 	if _is_in_hearing_range(world_pos):
 		_investigate_location(world_pos)
 
+func _investigate_location(world_pos: Vector2):
+	investigating = true
+	investigate_timer = investigate_time
+	target_facing = (world_pos - global_position).normalized()
