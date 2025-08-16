@@ -1,19 +1,23 @@
 extends CharacterBody2D
 
 @export var speed := 32.0
-@export var orbSpeed := 80.0
-@export var orbScene: PackedScene
+@export var orb_speed := 80.0
+@export var orb_scene: PackedScene
+@export var orbs_label: Label
+
+@export var max_orbs := 1
+var orbs_left := max_orbs
 
 signal orb_thrown(position: Vector2)
 
 func throw_orb(target: Vector2) -> void:
 	var tween = create_tween()
-	var orb = orbScene.instantiate()
+	var orb = orb_scene.instantiate()
 	get_tree().current_scene.add_child(orb)
 	orb.global_position = global_position
 	
 	var distance = global_position.distance_to(target)
-	var duration = distance / orbSpeed
+	var duration = distance / orb_speed
 	var arc_height = distance / 2
 	var stretch_factor = distance / 100.0
 	
@@ -31,8 +35,10 @@ func orb_landed(pos: Vector2, orb: Node2D):
 	orb.queue_free()
 
 func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("throw"):
+	if Input.is_action_just_pressed("throw") and orbs_left > 0:
 		throw_orb(get_global_mouse_position())
+		orbs_left -= 1
+		orbs_label.text = "Orbs: %d / %d" % [orbs_left, max_orbs]
 
 func _physics_process(delta: float) -> void:
 	var dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
