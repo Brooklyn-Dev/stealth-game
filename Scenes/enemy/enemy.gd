@@ -76,6 +76,12 @@ func _can_see_player() -> bool:
 	
 	return not raycast.is_colliding() or raycast.get_collider() == player
 
+func _is_in_hearing_range(pos: Vector2) -> bool:
+	var offset = pos - global_position
+	var nx = offset.x / hearing_range
+	var ny = offset.y / (hearing_range * 0.5)
+	return nx * nx + ny * ny <= 1.0
+
 func _draw():
 	_draw_hearing_zone()	
 	_draw_vision_cone()
@@ -110,13 +116,6 @@ func _draw_vision_cone() -> void:
 	draw_colored_polygon(points, Color.RED * 0.5)
 
 func _on_orb_thrown(world_pos: Vector2):
-	var dist_to_orb = global_position.distance_to(world_pos)
-	
-	var iso_offset = world_pos - global_position
-	iso_offset.y *= 0.5
-	var iso_dist = iso_offset.length()
-	
-	if iso_dist <= hearing_range:
-		investigating = true
-		investigate_timer = investigate_time
-		target_facing = (world_pos - global_position).normalized()
+	if _is_in_hearing_range(world_pos):
+		_investigate_location(world_pos)
+
