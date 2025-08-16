@@ -25,12 +25,13 @@ texture_filter = 1
 tile_map_data = PackedByteArray("AAAAAPz/AAACAAAAAAD7//z/AAACAAAAAAD7/wEAAAACAAAAAAD9////AAACAAAAAAD9//7/AAACAAAAAAD+//7/AAACAAAAAAD+////AAACAAAAAAAAAAEAAAACAAAAAAA=")
 tile_set = ExtResource("1_ibkli")
 
-[node name="Player" parent="Y-Sort" node_paths=PackedStringArray("tileMapLayer") instance=ExtResource("2_qbsmt")]
+[node name="Player" parent="Y-Sort" instance=ExtResource("2_qbsmt")]
 position = Vector2(-32, -24)
-tileMapLayer = NodePath("../TileMap/Layer 1")
 
 [node name="Camera2D" type="Camera2D" parent="Y-Sort/Player"]
 zoom = Vector2(5, 5)
 
 [node name="Enemy" parent="Y-Sort" instance=ExtResource("4_kldst")]
 position = Vector2(-16, -36)
+facing_degrees = 32.0
+facing_direction = Vector2(0.848048, 0.529919)

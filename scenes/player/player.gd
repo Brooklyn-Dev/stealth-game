@@ -2,9 +2,9 @@ extends CharacterBody2D
 
 @export var speed := 32.0
 @export var orbSpeed := 80.0
-
-@export var tileMapLayer: TileMapLayer
 @export var orbScene: PackedScene
+
+signal orb_thrown(position: Vector2)
 
 func throw_orb(target: Vector2) -> void:
 	var tween = create_tween()
@@ -27,8 +27,7 @@ func move_orb(orb: Node2D, start: Vector2, target: Vector2, t: float, arc_height
 	orb.global_position = pos
 	
 func orb_landed(pos: Vector2, orb: Node2D):
-	var tile = tileMapLayer.local_to_map(tileMapLayer.to_local(pos))
-	print("Hit tile: ", tile)
+	orb_thrown.emit(pos)
 	orb.queue_free()
 
 func _process(delta: float) -> void:
