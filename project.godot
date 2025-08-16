@@ -14,6 +14,10 @@ config/name="stealth-game"
 run/main_scene="uid://clkpgbjj1y2mf"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 
+[dotnet]
+
+project/assembly_name="stealth-game"
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/godot_super-wakatime/plugin.cfg")

@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=4 uid="uid://clkpgbjj1y2mf"]
+[gd_scene load_steps=5 format=4 uid="uid://clkpgbjj1y2mf"]
 
 [ext_resource type="TileSet" uid="uid://c2kwfrmdsgv85" path="res://assets/TileSet.tres" id="1_ibkli"]
 [ext_resource type="Script" uid="uid://dqvqhv1pms3td" path="res://scripts/tile_map_layer.gd" id="2_cpr0p"]
-[ext_resource type="PackedScene" uid="uid://jfdw5tg5oaio" path="res://scenes/player/Player.tscn" id="2_qbsmt"]
+[ext_resource type="PackedScene" uid="uid://jfdw5tg5oaio" path="res://Scenes/player/Player.tscn" id="2_qbsmt"]
+[ext_resource type="PackedScene" uid="uid://bn0ljsi1tmmdv" path="res://Scenes/enemy/Enemy.tscn" id="4_kldst"]
 
 [node name="Game" type="Node2D"]
 
@@ -30,3 +31,6 @@ tileMapLayer = NodePath("../TileMap/Layer 1")
 
 [node name="Camera2D" type="Camera2D" parent="Y-Sort/Player"]
 zoom = Vector2(5, 5)
+
+[node name="Enemy" parent="Y-Sort" instance=ExtResource("4_kldst")]
+position = Vector2(-16, -36)
